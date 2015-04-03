@@ -34,26 +34,49 @@ public class Vehicle : MovingEntity {
         this.m_dMaxForce = max_force;
         this.m_dMaxSpeed = max_speed;
         this.m_dMaxTurnRate = max_turn_rate;
+        this.m_pSteering = new SteeringBehavior();
     }
 
-    public override void OnUpdate()
+    protected override void OnUpdate()
     {
         base.OnUpdate();
         Vector2 steeringForce = m_pSteering.Calculate();
         Vector2 accelaration = steeringForce / m_dMass;
         this.m_vVelocity += accelaration * Time.deltaTime;
         this.m_vVelocity = AIMath.Truncate(this.m_vVelocity, m_dMaxSpeed);
-        Vector3 newPos = new Vector3(m_vVelocity.x * Time.deltaTime, m_vVelocity.y * Time.deltaTime, 0);
+        Vector3 newPos = new Vector3(m_vVelocity.x * Time.deltaTime, 0, m_vVelocity.y * Time.deltaTime);
         m_tTrans.position += newPos;
         if (m_vVelocity.magnitude > 0.00001f)
         {
-            Vector3 lookPos = new Vector3(m_vVelocity.x, m_vVelocity.y, 0);
-            m_tTrans.LookAt(lookPos);
             m_vSide = AIMath.Perp(m_tTrans.forward);
+        }
+        WrapAround();
+    }
+
+    private void WrapAround()
+    { 
+        Vector3 screenPoint = Camera.main.WorldToScreenPoint(m_tTrans.position);
+        Debug.Log(screenPoint);
+        if (screenPoint.x > Screen.width)
+        {
+            m_tTrans.position -= new Vector3(10, 0, 0);
+        }
+        if (screenPoint.x < 0)
+        {
+            m_tTrans.position += new Vector3(10, 0, 0);
+        }
+        if (screenPoint.y < 0)
+        {
+            m_tTrans.position += new Vector3(0, 0, 10);
+        }
+        if (screenPoint.y > Screen.height)
+        {
+            m_tTrans.position -= new Vector3(0, 0, 10);
         }
     }
 
-    public override bool HandleMessage(Telegram msg)
+
+    protected override bool HandleMessage(Telegram msg)
     {
         return base.HandleMessage(msg);
     }

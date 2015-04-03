@@ -70,6 +70,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Editor\ExportAssetBundle.cs" />
+    <None Include="Assets\Shader\FlatColorShader.shader" />
     <None Include="Assets\StreamingAssets\UnityVS\Editor\SyntaxTree.VisualStudio.Unity.Bridge.dll" />
     <None Include="Assets\StreamingAssets\UnityVS\Editor\SyntaxTree.VisualStudio.Unity.Messaging.dll" />
     <None Include="Assets\StreamingAssets\UnityVS\Editor\UnityVS.VersionSpecific.dll" />

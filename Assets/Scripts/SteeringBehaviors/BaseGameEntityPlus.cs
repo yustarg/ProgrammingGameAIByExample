@@ -1,9 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public abstract class BaseGameEntityPlus : MonoBehaviour{
+public abstract class BaseGameEntityPlus : MonoBehaviour
+{
 
-    private int m_ID;
+    private int m_iID;
     private static int m_iNextValidID;
     private bool m_bTag;
     private int m_iEntityType;
@@ -28,10 +29,10 @@ public abstract class BaseGameEntityPlus : MonoBehaviour{
     {
         set 
         {
-            this.m_ID = value;
+            this.m_iID = value;
             m_iNextValidID = value + 1;
         }
-        get { return m_ID; }
+        get { return m_iID; }
     }
 
     public bool Tag
@@ -45,12 +46,17 @@ public abstract class BaseGameEntityPlus : MonoBehaviour{
     //}
     private void Awake()
     {
-        this.OnAwake();
+        OnAwake();
     }
 
-    public virtual void OnAwake() { this.m_tTrans = transform; }
-    public virtual void OnUpdate() { }
-    public virtual bool HandleMessage(Telegram msg) { return false; }
+    private void Update()
+    {
+        OnUpdate();
+    }
+
+    protected virtual void OnAwake() { this.m_tTrans = transform; }
+    protected virtual void OnUpdate() { }
+    protected virtual bool HandleMessage(Telegram msg) { return false; }
 
 }
                                                                              

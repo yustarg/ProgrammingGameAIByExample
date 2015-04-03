@@ -16,11 +16,11 @@ public class GameWorld : MonoBehaviour {
         }
     }
 
-    public Transform[] objects;
+    public Vehicle car;
 
     void Awake()
     {
-        _instance = this;
+        car.SetVehicle(this, new Vector2(2, 2), 2, 5, 5, 5);
     }
 
 	// Use this for initialization
