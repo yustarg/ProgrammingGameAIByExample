@@ -13,8 +13,8 @@ namespace Steering
 
         public override void Execute(T entity)
         {
-            entity.Move();
-            entity.Seek(GameObject.Find("target"));
+            entity.Steering.Move();
+            entity.Steering.Seek(Utility.GetGameObjectPos2D(GameObject.Find("target")));
         }
 
         public override void Exit(T entity)

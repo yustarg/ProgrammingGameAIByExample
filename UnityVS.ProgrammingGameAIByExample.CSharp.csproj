@@ -56,6 +56,7 @@
     <Compile Include="Assets\Scripts\SteeringBehaviors\State\SeekState.cs" />
     <Compile Include="Assets\Scripts\SteeringBehaviors\State\StateMachine.cs" />
     <Compile Include="Assets\Scripts\SteeringBehaviors\SteeringBehavior.cs" />
+    <Compile Include="Assets\Scripts\SteeringBehaviors\Utility.cs" />
     <Compile Include="Assets\Scripts\SteeringBehaviors\Vehicle.cs" />
     <Compile Include="Assets\Scripts\WestWorld\AIMath.cs" />
     <Compile Include="Assets\Scripts\WestWorld\BaseGameEntity.cs" />

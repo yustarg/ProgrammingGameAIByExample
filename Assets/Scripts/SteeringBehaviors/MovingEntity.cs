@@ -8,10 +8,11 @@ namespace Steering
 
         protected Vector2 m_vVelocity;
         protected Vector2 m_vSide;
-        public float m_dMass;
-        public float m_dMaxSpeed;
-        public float m_dMaxForce;
-        public float m_dMaxTurnRate;
+
+        protected float m_dMass;
+        protected float m_dMaxSpeed;
+        protected float m_dMaxForce;
+        protected float m_dMaxTurnRate;
 
         public MovingEntity(int id, string resPath)
             : base(id, resPath)

@@ -24,6 +24,16 @@ namespace Steering
             m_GameObjectPath = resPath;
         }
 
+        public GameObject GameObject
+        {
+            get { return m_GameObject; }
+        }
+
+        public Transform Transform
+        {
+            get { return m_Trans; }
+        }
+
         public double BoundingRadius
         {
             set { m_BoundingRadius = value; }
@@ -60,7 +70,7 @@ namespace Steering
 
         public virtual void OnAwake() { }
         public virtual void OnUpdate() { }
-        public virtual bool HandleMessage(Telegram msg) { return false; }
+        //public virtual bool HandleMessage(Telegram msg) { return false; }
 
     }
 

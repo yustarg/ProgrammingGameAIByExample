@@ -13,7 +13,7 @@ namespace Steering
 
         public override void Execute(T entity)
         {
-            entity.Move();
+            entity.Steering.Move();
         }
 
         public override void Exit(T entity)

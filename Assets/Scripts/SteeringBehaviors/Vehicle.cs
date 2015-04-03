@@ -13,6 +13,7 @@ namespace Steering
         private SteeringBehavior m_Steering;
         private StateMachine<Vehicle> m_StateMachine;
 
+        private VehicleType type;
 
         public GameWorld World
         {
@@ -29,15 +30,24 @@ namespace Steering
             return new Vector2(m_Trans.position.x, m_Trans.position.z);
         }
 
+        public StateMachine<Vehicle> StateMachine
+        {
+            get { return m_StateMachine; }
+        }
+
         public static Vehicle CreateVehicle(VehicleType type)
         {
             Vehicle vihicle = null;
             switch (type)
             {
                 case VehicleType.Audi:
+                    vihicle = new Vehicle(1, new Vector2(1, 1), 1, 1, 1, 1, "Assets/StreamingAssets/Prefabs/Vehicle.prefab");
+                    vihicle.StateMachine.CurrentState = new MoveState<Vehicle>();
+                    break;
                 case VehicleType.Benz:
                 case VehicleType.Farrari:
-                    vihicle = new Vehicle(1, new Vector2(5, 5), 2, 5, 5, 5, "Assets/StreamingAssets/Prefabs/Vehicle.prefab");
+                    vihicle = new Vehicle(1, new Vector2(3, 3), 3, 3, 3, 3, "Assets/StreamingAssets/Prefabs/Vehicle.prefab");
+                    vihicle.StateMachine.CurrentState = new MoveState<Vehicle>();
                     break;
             }
             return vihicle;
@@ -61,20 +71,23 @@ namespace Steering
             m_GameObject = LoadGameObject();
             m_Trans = m_GameObject.transform;
             m_StateMachine = new StateMachine<Vehicle>(this);
-            m_StateMachine.CurrentState = new SeekState<Vehicle>();
         }
 
         public override void OnUpdate()
         {
             base.OnUpdate();
             CalculateVelocity();
+            m_Steering.Move();
+            //Arrive(GameObject.Find("target"));
             //if (m_vVelocity.magnitude > 0.00001f)
             //{
             //    m_vSide = AIMath.Perp(m_Trans.forward);
             //}
+            m_Trans.LookAt(m_Trans.forward);
             WrapAround();
-            m_StateMachine.Update();
+            //m_StateMachine.Update();
         }
+
         private void WrapAround()
         {
             Vector3 screenPoint = Camera.main.WorldToScreenPoint(m_Trans.position);
@@ -104,14 +117,6 @@ namespace Steering
             this.m_vVelocity = AIMath.Truncate(m_vVelocity, m_dMaxSpeed);
         }
 
-
-        public void Move()
-        {
-            Vector3 newPos = new Vector3(m_vVelocity.x * Time.deltaTime, 0, m_vVelocity.y * Time.deltaTime);
-            m_Trans.position += newPos;
-        }
-
-
         public void Seek(GameObject target)
         {
             Vector2 targetPos;
@@ -126,9 +131,18 @@ namespace Steering
             m_vVelocity += m_Steering.Seek(targetPos);
         }
 
-        public override bool HandleMessage(Telegram msg)
+        public void Arrive(GameObject target)
         {
-            return base.HandleMessage(msg);
+            Vector2 targetPos;
+            if (target)
+            {
+                targetPos = new Vector2(target.transform.position.x, target.transform.position.z);
+            }
+            else
+            {
+                targetPos = Vector2.zero;
+            }
+            m_vVelocity += m_Steering.Arrive(targetPos, DecelerationType.Normal);
         }
     }
 }

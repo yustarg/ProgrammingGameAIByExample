@@ -1,44 +1,48 @@
 ﻿using System;
 using UnityEngine;
 
-public enum LocationType
+namespace WestWorld
 {
-    shack,
-    goldmine,
-    bank,
-    saloon
-}
 
-public enum EntityName
-{
-    ent_Miner_Bob,
-    ent_Elsa
-}
-
-public enum WestWorldMessageType
-{ 
-    Msg_Null = -1,
-    Msg_HiHoneyImHome = 1,
-    Msg_StewReady
-}
-
-public class Utility
-{
-    public static string GetNameOfEntity(int n)
+    public enum LocationType
     {
-        switch (n)
-        {
-            case (int)EntityName.ent_Miner_Bob:
-                return "Miner Bob";
-            case (int)EntityName.ent_Elsa:
-                return "Elsa";
-            default:
-                return "UNKNOWN!";
-        }
+        shack,
+        goldmine,
+        bank,
+        saloon
     }
 
-    public static DateTime GetCurrentTime()
+    public enum EntityName
     {
-        return DateTime.Now.Date;
+        ent_Miner_Bob,
+        ent_Elsa
+    }
+
+    public enum WestWorldMessageType
+    {
+        Msg_Null = -1,
+        Msg_HiHoneyImHome = 1,
+        Msg_StewReady
+    }
+
+    public class Utility
+    {
+        public static string GetNameOfEntity(int n)
+        {
+            switch (n)
+            {
+                case (int)EntityName.ent_Miner_Bob:
+                    return "Miner Bob";
+                case (int)EntityName.ent_Elsa:
+                    return "Elsa";
+                default:
+                    return "UNKNOWN!";
+            }
+        }
+
+        public static DateTime GetCurrentTime()
+        {
+            return DateTime.Now.Date;
+        }
     }
 }

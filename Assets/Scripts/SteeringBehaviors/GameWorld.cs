@@ -23,6 +23,7 @@ public class GameWorld : MonoBehaviour {
     void Awake()
     {
         AddGameEntity(Vehicle.CreateVehicle(VehicleType.Audi));
+        AddGameEntity(Vehicle.CreateVehicle(VehicleType.Farrari));
     }
 
 	// Use this for initialization
