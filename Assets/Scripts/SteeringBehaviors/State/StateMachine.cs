@@ -6,19 +6,19 @@ namespace Steering
     public class StateMachine<T> where T : BaseGameEntity
     {
         private T m_Owner;
-        private State<T> m_CurrentState;
-        private State<T> m_GlobalState;
-        private State<T> m_PreviousState;
+        private GameEntityState<T> m_CurrentState;
+        private GameEntityState<T> m_GlobalState;
+        private GameEntityState<T> m_PreviousState;
 
-        public State<T> CurrentState
+        public GameEntityState<T> CurrentState
         {
             set { m_CurrentState = value; }
         }
-        public State<T> GlobalState
+        public GameEntityState<T> GlobalState
         {
             set { m_GlobalState = value; }
         }
-        public State<T> PreviousState
+        public GameEntityState<T> PreviousState
         {
             set { m_PreviousState = value; }
         }
@@ -33,19 +33,19 @@ namespace Steering
 
         public void Update()
         {
-            if (m_GlobalState != null)
-            {
-                m_GlobalState.Excute(m_Owner);
-            }
+            //if (m_GlobalState != null)
+            //{
+            //    m_GlobalState.Excute(m_Owner);
+            //}
 
             if (m_CurrentState != null)
             {
-                m_CurrentState.Excute(m_Owner);
+                m_CurrentState.Execute(m_Owner);
             }
         }
 
 
-        public void ChangeState(State<T> newState)
+        public void ChangeState(GameEntityState<T> newState)
         {
             m_PreviousState = m_CurrentState;
             m_CurrentState.Exit(m_Owner);

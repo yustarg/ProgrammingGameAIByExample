@@ -1,42 +1,46 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class VisitBankAndDepositGold : State<Miner>
+namespace WestWorld
 {
-    private const int MoneyInBankThreshold = 5;
 
-    public override void Enter(Miner miner)
+    public class VisitBankAndDepositGold : State<Miner>
     {
-        if (miner.Location != LocationType.bank)
+        private const int MoneyInBankThreshold = 5;
+
+        public override void Enter(Miner miner)
         {
-            Debug.Log(Utility.GetNameOfEntity(miner.GetID()) + ": Goin' to the bank. Yes siree");
-            miner.Location = LocationType.bank;
+            if (miner.Location != LocationType.bank)
+            {
+                Debug.Log(Utility.GetNameOfEntity(miner.GetID()) + ": Goin' to the bank. Yes siree");
+                miner.Location = LocationType.bank;
+            }
         }
-    }
 
-    public override void Excute(Miner miner)
-    {
-        miner.AddToWealth(miner.GoldCarried);
-        miner.GoldCarried = 0;
-        Debug.Log(Utility.GetNameOfEntity(miner.GetID()) + ": Depositing gold. Total savings now: " + miner.MoneyInBank);
-        if (miner.MoneyInBank >= MoneyInBankThreshold)
+        public override void Excute(Miner miner)
         {
-            Debug.Log(Utility.GetNameOfEntity(miner.GetID()) + ": WooHoo! Rich enough for now. Back home to mah li'lle lady ");
-            miner.FSM.ChangeState(new GoHomeAndSleepTilRested());
+            miner.AddToWealth(miner.GoldCarried);
+            miner.GoldCarried = 0;
+            Debug.Log(Utility.GetNameOfEntity(miner.GetID()) + ": Depositing gold. Total savings now: " + miner.MoneyInBank);
+            if (miner.MoneyInBank >= MoneyInBankThreshold)
+            {
+                Debug.Log(Utility.GetNameOfEntity(miner.GetID()) + ": WooHoo! Rich enough for now. Back home to mah li'lle lady ");
+                miner.FSM.ChangeState(new GoHomeAndSleepTilRested());
+            }
+            else
+            {
+                miner.FSM.ChangeState(new EnterMineAndDigForNugget());
+            }
         }
-        else
+
+        public override void Exit(Miner miner)
         {
-            miner.FSM.ChangeState(new EnterMineAndDigForNugget());
+            Debug.Log(Utility.GetNameOfEntity(miner.GetID()) + "Leavin' the bank ");
         }
-    }
 
-    public override void Exit(Miner miner)
-    {
-        Debug.Log(Utility.GetNameOfEntity(miner.GetID()) + "Leavin' the bank ");
-    }
-
-    public override bool OnMessage(Miner entity, Telegram tel)
-    {
-        return false;
+        public override bool OnMessage(Miner entity, Telegram tel)
+        {
+            return false;
+        }
     }
 }

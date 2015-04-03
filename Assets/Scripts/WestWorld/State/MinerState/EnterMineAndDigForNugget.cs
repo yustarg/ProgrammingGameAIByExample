@@ -1,41 +1,47 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class EnterMineAndDigForNugget : State<Miner>{
 
+namespace WestWorld
+{
 
-
-    public override void Enter(Miner miner)
+    public class EnterMineAndDigForNugget : State<Miner>
     {
-        if (miner.Location != LocationType.goldmine)
+
+
+
+        public override void Enter(Miner miner)
         {
-            Debug.Log(Utility.GetNameOfEntity(miner.GetID()) + ": Walking to the goldmine");
-            miner.Location = LocationType.goldmine;
+            if (miner.Location != LocationType.goldmine)
+            {
+                Debug.Log(Utility.GetNameOfEntity(miner.GetID()) + ": Walking to the goldmine");
+                miner.Location = LocationType.goldmine;
+            }
         }
-    }
 
-    public override void Excute(Miner miner)
-    {
-        miner.AddToGoldCarrier(1);
-        miner.IncreaseFatigue();
-        Debug.Log(Utility.GetNameOfEntity(miner.GetID()) + ": Picking up a Nugget");
-        if (miner.IsPocketsFull())
+        public override void Excute(Miner miner)
         {
-            miner.FSM.ChangeState(new VisitBankAndDepositGold());
+            miner.AddToGoldCarrier(1);
+            miner.IncreaseFatigue();
+            Debug.Log(Utility.GetNameOfEntity(miner.GetID()) + ": Picking up a Nugget");
+            if (miner.IsPocketsFull())
+            {
+                miner.FSM.ChangeState(new VisitBankAndDepositGold());
+            }
+            if (miner.IsThirsty())
+            {
+                miner.FSM.ChangeState(new QuenchThirst());
+            }
         }
-        if (miner.IsThirsty())
+
+        public override void Exit(Miner miner)
         {
-            miner.FSM.ChangeState(new QuenchThirst());
+            Debug.Log(Utility.GetNameOfEntity(miner.GetID()) + ": Leaving the gold mine!!!");
         }
-    }
 
-    public override void Exit(Miner miner)
-    {
-        Debug.Log(Utility.GetNameOfEntity(miner.GetID()) + ": Leaving the gold mine!!!");
-    }
-
-    public override bool OnMessage(Miner entity, Telegram tel)
-    {
-        return false;
+        public override bool OnMessage(Miner entity, Telegram tel)
+        {
+            return false;
+        }
     }
 }
