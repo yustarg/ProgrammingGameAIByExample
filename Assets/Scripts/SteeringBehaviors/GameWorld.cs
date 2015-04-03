@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
+using Steering;
 
 public class GameWorld : MonoBehaviour {
 
@@ -16,11 +18,11 @@ public class GameWorld : MonoBehaviour {
         }
     }
 
-    public Vehicle car;
+    public List<BaseGameEntity> gameEntityList = new List<BaseGameEntity>();
 
     void Awake()
     {
-        car.SetVehicle(this, new Vector2(2, 2), 2, 5, 5, 5);
+        AddGameEntity(Vehicle.CreateVehicle(VehicleType.Audi));
     }
 
 	// Use this for initialization
@@ -30,6 +32,17 @@ public class GameWorld : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	
+        for (int i = 0; i < gameEntityList.Count; i++)
+        {
+            gameEntityList[i].OnUpdate();
+        }
 	}
+
+    public void AddGameEntity(BaseGameEntity entity)
+    {
+        if (!gameEntityList.Contains(entity))
+        {
+            gameEntityList.Add(entity);
+        }
+    }
 }

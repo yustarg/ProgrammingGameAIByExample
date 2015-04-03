@@ -19,6 +19,10 @@ public class SteeringBehavior
     //length of the 'detection box' utilized in obstacle avoidance
     double m_dDBoxLength;
 
+    public SteeringBehavior(Vehicle vehicle)
+    {
+        m_pVehicle = vehicle;
+    }
 
     public Vector2 Calculate()
     {
@@ -28,7 +32,7 @@ public class SteeringBehavior
     //this behavior moves the agent towards a target position
     public Vector2 Seek(Vector2 targetPos)
     {
-        Vector2 desiredVelocity = (targetPos - m_pVehicle.Pos()).normalized * m_pVehicle.MaxSpeed;
+        Vector2 desiredVelocity = (targetPos - m_pVehicle.GetPosition()).normalized * m_pVehicle.MaxSpeed;
         return (desiredVelocity - m_pVehicle.Velocity);
     }
 }

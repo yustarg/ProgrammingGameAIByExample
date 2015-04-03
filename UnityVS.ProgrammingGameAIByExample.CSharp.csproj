@@ -48,9 +48,11 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\SteeringBehaviors\BaseGameEntityPlus.cs" />
+    <Compile Include="Assets\Scripts\SteeringBehaviors\BaseGameEntity.cs" />
     <Compile Include="Assets\Scripts\SteeringBehaviors\GameWorld.cs" />
     <Compile Include="Assets\Scripts\SteeringBehaviors\MovingEntity.cs" />
+    <Compile Include="Assets\Scripts\SteeringBehaviors\State\GameEntityState.cs" />
+    <Compile Include="Assets\Scripts\SteeringBehaviors\State\StateMachine.cs" />
     <Compile Include="Assets\Scripts\SteeringBehaviors\SteeringBehavior.cs" />
     <Compile Include="Assets\Scripts\SteeringBehaviors\Vehicle.cs" />
     <Compile Include="Assets\Scripts\WestWorld\AIMath.cs" />

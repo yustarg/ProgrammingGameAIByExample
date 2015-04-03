@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using WestWorld;
 
 public class MinerWife : BaseGameEntity {
 
